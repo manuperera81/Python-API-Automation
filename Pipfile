@@ -4,13 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-
-[dev-packages]
-
 requests = "*"
-pytest = "*"
 assertpy = "*"
 jsonpath-ng = "*"
+pytest = "*"
+[dev-packages]
 
 
 [requires]
