@@ -8,6 +8,7 @@ requests = "*"
 assertpy = "*"
 jsonpath-ng = "*"
 pytest = "*"
+Faker = "*"
 [dev-packages]
 
 
