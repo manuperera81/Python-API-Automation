@@ -1,41 +1,26 @@
 import json
+from uuid import uuid1, uuid4
 from json import dumps, loads
-from uuid import uuid4, uuid1
 
 import pytest
 import requests
-from faker import Faker
-from jsonpath_ng import parse
 from assertpy import assert_that
+from cerberus import Validator
+from faker import Faker
 
 from config import BASE_URI
 from utils.file_reader import read_file
 
-
-def test_create_new_user():
-    response = create_new_unique_user(None)
-    assert_that(response[0].status_code).is_equal_to(200)
-
-
-def test_Login_user():
-    new_user = create_new_unique_user()
-    username = new_user[1]
-    password = new_user[2]
-
-    print(username)
-    print(password)
-    response = login_to_the_system(username, password)
-    assert_that(response.status_code).is_equal_to(200)
-
-
-def test_Logout_current_user():
-    headers = {
-        'Accept': "application/json",
-        'Connection': "keep-alive"
-    }
-    Logout_response = requests.get(url=f'{BASE_URI}/user/logout', headers=headers)
-
-
+schema = {
+    "id": {'type': 'number'},
+    "username": {'type': 'string'},
+    "firstName": {'type': 'string'},
+    "lastName": {'type': 'string'},
+    "email": {'type': 'string'},
+    "password": {'type': 'string'},
+    "phone": {'type': 'string'},
+    "userStatus": {'type': 'number'}
+}
 
 
 @pytest.fixture
@@ -61,19 +46,20 @@ def create_data():
     yield payload
 
 
-def test_person_added_with_json_Template(create_data):
+def test_person_get_by_name_has_expected_schema(create_data):
     create_new_unique_user(create_data)
 
     response = get_user_by_userName(create_data)
     person = loads(response.text)
 
-    result = person['firstName']
-    expected_first_Name = create_data['firstName']
+    validator = Validator(schema, require_all=True)
+    is_valid = validator.validate(person)
 
-    assert_that(result).contains(expected_first_Name)
+    assert_that(is_valid, description=validator.errors).is_true()
+
 
 def get_user_by_userName(userdataPayload):
-    userPayload = dumps(userdataPayload)
+    userPayload = json.dumps(userdataPayload)
     resp = loads(userPayload)
     userName = resp['username']
 
@@ -84,22 +70,6 @@ def get_user_by_userName(userdataPayload):
     userDetail_response = requests.get(url=f'{BASE_URI}/user/{userName}', headers=headers)
 
     return userDetail_response
-
-
-
-def login_to_the_system(userName, password):
-    parameters = dumps({
-        "username": userName,
-        "password": password
-    })
-
-    headers = {
-        'Accept': 'application/json',
-        'Connection': 'keep-alive'
-    }
-    login_response = requests.get(url=f'{BASE_URI}/user/login', params=parameters, headers=headers)
-    return login_response
-
 
 
 def create_new_unique_user(body):

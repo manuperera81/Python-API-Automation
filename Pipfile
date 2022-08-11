@@ -9,6 +9,7 @@ assertpy = "*"
 jsonpath-ng = "*"
 pytest = "*"
 Faker = "*"
+cerberus = "*"
 [dev-packages]
 
 
