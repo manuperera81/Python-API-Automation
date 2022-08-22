@@ -2,10 +2,22 @@ from uuid import uuid1, uuid4
 
 import pytest
 from assertpy import assert_that
+from cerberus import Validator
 from faker import Faker
 
 from clients.user.user_client import UserClient
 from utils.file_reader import read_file
+
+schema = {
+    "id": {'type': 'number'},
+    "username": {'type': 'string'},
+    "firstName": {'type': 'string'},
+    "lastName": {'type': 'string'},
+    "email": {'type': 'string'},
+    "password": {'type': 'string'},
+    "phone": {'type': 'string'},
+    "userStatus": {'type': 'number'}
+}
 
 client = UserClient()
 
@@ -33,28 +45,15 @@ def create_data():
     yield payload
 
 
-def test_create_new_user(create_data):
-    response = client.create_person(create_data)
-    assert_that(response.status_code).is_equal_to(200)
-
-
-def test_get_person_Details(create_data):
+def test_person_get_by_name_has_expected_schema(create_data):
     client.create_person(create_data)
 
     response = client.get_user_by_userName(create_data)
     person = response.as_dict
 
-    result = person["firstName"]
-    expected_first_Name = create_data['firstName']
+    validator = Validator(schema, require_all=True)
+    is_valid = validator.validate(person)
 
-    assert_that(result).contains(expected_first_Name)
+    assert_that(is_valid, description=validator.errors).is_true()
 
 
-def test_Login_user(create_data):
-    client.create_person(create_data)
-
-    username = create_data["username"]
-    password = create_data["password"]
-
-    response = client.login_to_the_system(username, password)
-    assert_that(response.status_code).is_equal_to(200)

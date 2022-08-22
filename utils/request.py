@@ -1,7 +1,5 @@
 from dataclasses import dataclass
-
 import requests
-
 
 @dataclass
 class Response:
@@ -9,7 +7,6 @@ class Response:
     text: str
     as_dict: object
     headers: dict
-
 
 class APIRequest:
 
