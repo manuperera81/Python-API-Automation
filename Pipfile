@@ -10,8 +10,9 @@ jsonpath-ng = "*"
 pytest = "*"
 Faker = "*"
 cerberus = "*"
-[dev-packages]
+pytest-reportportal = "*"
 
+[dev-packages]
 
 [requires]
 python_version = "3.9"

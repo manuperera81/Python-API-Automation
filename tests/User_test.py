@@ -1,40 +1,16 @@
-from uuid import uuid1, uuid4
-
-import pytest
 from assertpy import assert_that
-from faker import Faker
 
 from clients.user.user_client import UserClient
-from utils.file_reader import read_file
 
 client = UserClient()
 
 
-@pytest.fixture
-def create_data():
-    payload = read_file("create_person.json")
-
-    fake = Faker()
-
-    custom_payload = {
-        "id": int(str(uuid1().node)[:5]),
-        "username": f'{fake.first_name()} {str(uuid4())}',
-        "firstName": fake.first_name(),
-        "lastName": fake.last_name(),
-        "email": fake.email(),
-        "password": fake.password(),
-        "phone": fake.phone_number(),
-        "userStatus": int(str(uuid1().node)[:5])
-    }
-
-    for key in custom_payload:
-        payload[key] = custom_payload[key]
-
-    yield payload
-
-
-def test_create_new_user(create_data):
+def test_create_new_user(create_data,rp_logger):
+    """
+    Test the User API and create the new user with JSON template
+    """
     response = client.create_person(create_data)
+    rp_logger.info("User successfully created")
     assert_that(response.status_code).is_equal_to(200)
 
 
