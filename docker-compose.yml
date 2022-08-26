@@ -51,11 +51,11 @@ services:
       # ports:
       # - "9200:9200"
     healthcheck:
-      test: ["CMD", "curl","-s" ,"-f", "http://elastic:elastic1q2w3e@localhost:9200/_cat/health"]
+      test: [ "CMD", "curl","-s" ,"-f", "http://elastic:elastic1q2w3e@localhost:9200/_cat/health" ]
     restart: always
 
   ## An analyzer instance for main functionality, don't forget to use the same storage settings (either MinIO, or filesystem) for analyzer_train
-  analyzer: 
+  analyzer:
     image: reportportal/service-auto-analyzer:5.7.2
     environment:
       LOGGING_LEVEL: info
@@ -72,7 +72,7 @@ services:
       rabbitmq:
         condition: service_healthy
     restart: always
-  
+
   ## An analyzer instance for training, don't forget to setup the same storage (either MinIO, or filesystem) as for main analyzer
   analyzer_train:
     image: reportportal/service-auto-analyzer:5.7.2
@@ -93,9 +93,9 @@ services:
       rabbitmq:
         condition: service_healthy
     restart: always
- 
+
   ## Metrics service for analyzing how analyzer is working and manage retrained models
-  metrics-gatherer: 
+  metrics-gatherer:
     image: reportportal/service-metrics-gatherer:1.1.20
     environment:
       LOGGING_LEVEL: info
@@ -165,7 +165,7 @@ services:
     #  -c effective_cache_size=12GB
     #  -c maintenance_work_mem=1GB
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
       interval: 10s
       timeout: 120s
       retries: 10
@@ -180,7 +180,7 @@ services:
       RABBITMQ_DEFAULT_USER: "rabbitmq"
       RABBITMQ_DEFAULT_PASS: "rabbitmq"
     healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
+      test: [ "CMD", "rabbitmqctl", "status" ]
       retries: 5
     restart: always
 
@@ -220,11 +220,11 @@ services:
       - LB_URL=http://gateway:8081
       - TRAEFIK_V2_MODE=true
     labels:
-        - "traefik.http.routers.index.rule=PathPrefix(`/`)"
-        - "traefik.http.routers.index.service=index"
-        - "traefik.http.services.index.loadbalancer.server.port=8080"
-        - "traefik.http.services.index.loadbalancer.server.scheme=http"
-        - "traefik.expose=true"
+      - "traefik.http.routers.index.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.index.service=index"
+      - "traefik.http.services.index.loadbalancer.server.port=8080"
+      - "traefik.http.services.index.loadbalancer.server.scheme=http"
+      - "traefik.expose=true"
     restart: always
 
   api:
@@ -263,7 +263,7 @@ services:
       - "traefik.http.services.api.loadbalancer.server.scheme=http"
       - "traefik.expose=true"
     restart: always
-    
+
   jobs:
     image: reportportal/service-jobs:5.7.2
     depends_on:
@@ -297,13 +297,13 @@ services:
       RP_PROCESSING_LOG_MAXBATCHTIMEOUT: 6000
       RP_AMQP_MAXLOGCONSUMER: 1
     labels:
-    - traefik.http.middlewares.jobs-strip-prefix.stripprefix.prefixes=/jobs
-    - traefik.http.routers.jobs.middlewares=jobs-strip-prefix@docker
-    - traefik.http.routers.jobs.rule=PathPrefix(`/jobs`)
-    - traefik.http.routers.jobs.service=jobs
-    - traefik.http.services.jobs.loadbalancer.server.port=8686
-    - traefik.http.services.jobs.loadbalancer.server.scheme=http
-    - traefik.expose=true
+      - traefik.http.middlewares.jobs-strip-prefix.stripprefix.prefixes=/jobs
+      - traefik.http.routers.jobs.middlewares=jobs-strip-prefix@docker
+      - traefik.http.routers.jobs.rule=PathPrefix(`/jobs`)
+      - traefik.http.routers.jobs.service=jobs
+      - traefik.http.services.jobs.loadbalancer.server.port=8686
+      - traefik.http.services.jobs.loadbalancer.server.scheme=http
+      - traefik.expose=true
     restart: always
 
   ui:
@@ -326,7 +326,7 @@ services:
     #  - '9000:9000'
     volumes:
       ## For unix host
-      - ./data/storage:/data 
+      - ./data/storage:/data
       ## For windows host
       # - minio:/data
     environment:
@@ -334,7 +334,7 @@ services:
       MINIO_SECRET_KEY: minio123
     command: server /data
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
       interval: 30s
       timeout: 20s
       retries: 3

@@ -1,13 +1,15 @@
 import json
 from pathlib import Path
 
-BASE_PATH = Path.cwd().joinpath('tests','data')
+BASE_PATH = Path.cwd().joinpath('tests', 'data')
+
 
 def read_file(file_name):
     path = get_file_with_json_extention(file_name)
 
-    with path.open(mode='r') as f:
+    with path.open(mode="r") as f:
         return json.load(f)
+
 
 def get_file_with_json_extention(file_name):
     if '.json' in file_name:

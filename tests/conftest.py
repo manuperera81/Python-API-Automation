@@ -32,9 +32,8 @@ def create_data():
     yield payload
 
 
-
 @pytest.fixture(scope='session')
-def rp_logger():
+def logger():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     logging.setLoggerClass(RPLogger)

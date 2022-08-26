@@ -135,7 +135,9 @@ report.html
 
 #Pycharm
 **/.idea/
-/data/*
+data/*
 /data/elasticsearch/*
 /data/postgres/*
 /data/storage/*
+/data/elasticsearch/nodes/0/_state/*
+/data/postgres/

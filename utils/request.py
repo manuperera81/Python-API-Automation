@@ -1,5 +1,7 @@
 from dataclasses import dataclass
+
 import requests
+
 
 @dataclass
 class Response:
@@ -8,9 +10,10 @@ class Response:
     as_dict: object
     headers: dict
 
+
 class APIRequest:
 
-    def get(self, url,headers):
+    def get(self, url, headers):
         response = requests.get(url, headers=headers)
         return self.__get_responses(response)
 

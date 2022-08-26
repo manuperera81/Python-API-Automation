@@ -57,7 +57,3 @@ class UserClient(BaseClient):
         login_response = self.request.get_with_parameters(url=f'{BASE_URI}/user/login', parameters=parameters,
                                                           headers=self.headers)
         return login_response
-
-
-
-

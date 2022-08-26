@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/data/elasticsearch/nodes/0/indices/E3rbRqyISvKoVClOp1TcpQ/_state" />
+      <excludeFolder url="file://$MODULE_DIR$/data/elasticsearch/nodes/0/indices/FDr6VRkpTZSdYcEObxUywA/_state" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_wal/archive_status" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_logical/mappings" />
+      <excludeFolder url="file://$MODULE_DIR$/data/storage/.minio.sys/multipart" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_commit_ts" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_dynshmem" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_replslot" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_serial" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_snapshots" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_stat" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_tblspc" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_twophase" />
+      <excludeFolder url="file://$MODULE_DIR$/data/postgres/pg_logical/snapshots" />
+      <excludeFolder url="file://$MODULE_DIR$/data/storage/.minio.sys/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/tests/.pytest_cache/v" />
+    </content>
     <orderEntry type="jdk" jdkName="Python 3.9 (API-Automation-ODUUB9dq)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
