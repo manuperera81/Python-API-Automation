@@ -12,8 +12,8 @@ This entinre framework used on [Petstore API Collection](https://petstore.swagge
 This is build on custom Python environment
 
 ```
-###### #Activate virtualenv
+# To Activate virtualenv
 pipenv shell
-###### #Install all dependencies in your virtualenv
+# Install all dependencies in your virtualenv
 pipenv install
 ```
